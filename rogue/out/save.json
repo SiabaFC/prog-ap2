@@ -1,0 +1,71 @@
+{
+    "aventureiro": {
+        "nome": "abc",
+        "vida": 118,
+        "forca": 28,
+        "defesa": 10,
+        "posicao": [
+            2,
+            8
+        ],
+        "cor": [
+            255,
+            255,
+            255
+        ],
+        "char": "G",
+        "chars_possiveis": [
+            "@",
+            "#",
+            "$",
+            "&",
+            "G"
+        ],
+        "dificuldade": 1,
+        "xp": 1,
+        "nivel": 1,
+        "xp_por_nivel": 5,
+        "classe": "Guerreiro"
+    },
+    "tesouro": {
+        "posicao": [
+            5,
+            0
+        ]
+    },
+    "tempo": {
+        "tempo": 15.372507810592651
+    },
+    "obstaculos": [
+        {
+            "posicao": [
+                7,
+                2
+            ]
+        },
+        {
+            "posicao": [
+                3,
+                0
+            ]
+        },
+        {
+            "posicao": [
+                7,
+                1
+            ]
+        },
+        {
+            "posicao": [
+                1,
+                6
+            ]
+        },
+        {
+            "posicao": [
+                7,
+                9
+            ]
+        }
+    ]
+}
