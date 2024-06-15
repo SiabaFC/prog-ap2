@@ -3,7 +3,7 @@ import os.path
 
 import pygame
 
-CAMINHO = os.path.join(os.getcwd(), "assets", "som")
+CAMINHO = os.path.join(os.getcwd(), "rogue", "assets", "som")
 
 def iniciar_musica():
     pygame.mixer.music.load(os.path.join(CAMINHO, "tema.ogg"))
