@@ -12,12 +12,15 @@ from jogo.personagens.aventureiro.aventureiro import Aventureiro
 from jogo.personagens.aventureiro.guerreiro import Guerreiro
 from jogo.personagens.aventureiro.tank import Tank
 from jogo.personagens.tesouro import Tesouro
+from jogo.personagens.pocao import Pocao
 from jogo.personagens.obstaculo import Obstaculo
 
 import pygame
+import random
 
 def jogo():
     tesouro = Tesouro()
+    pocao = Pocao()
 
     nome = inputbox.ler_texto("Informe o seu nome:")
     classe = buttonbox.selecionar_classe("Clique na classe desejada:")
@@ -76,6 +79,17 @@ def jogo():
                         mensagem_combate = f"{nome_monstro} foi derrotado!"
                     else:
                         mensagem_combate = "Você não encontrou nada"
+                    
+                    if jogador.posicao == pocao.posicao:
+                        acao = random.randint(1,3)
+                        match acao:
+                            case 1:
+                                jogador.vida = jogador.vida *2 
+                            case 2:
+                                jogador.forca = jogador.forca +15
+                            case 3:
+                                jogador.defesa = jogador.defesa +10
+                        pocao.ativa = "0"
 
                     if jogador.posicao == tesouro.posicao:
                         boss = Boss(jogador.dificuldade)
@@ -87,7 +101,7 @@ def jogo():
                         jogo_acabou = True
 
         # Desenho na tela
-        tela.renderizar(jogador, tesouro, mensagem_combate, obstaculos)
+        tela.renderizar(jogador, tesouro, mensagem_combate, obstaculos, pocao)
 
         # Chamar o relógio interno do jogo
         pygame.time.Clock().tick(60)

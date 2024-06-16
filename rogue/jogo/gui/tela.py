@@ -26,7 +26,7 @@ class Tela:
         self.display = pygame.display.set_mode((LARGURA, ALTURA))
         pygame.display.set_caption("Rogue")
 
-    def renderizar(self, aventureiro, tesouro, mensagem_combate, obstaculos):
+    def renderizar(self, aventureiro, tesouro, mensagem_combate, obstaculos, pocao):
         self.display.fill(CORES.preto)
         self.aventureiro(aventureiro)
         self.tesouro(tesouro)
@@ -34,6 +34,8 @@ class Tela:
         self.mapa(aventureiro, tesouro, obstaculos)
         self.combate(mensagem_combate)
         self.cronometro()
+        self.dificuldade(aventureiro)
+        self.pocao(pocao)
 
         pygame.display.update()
 
@@ -61,16 +63,23 @@ class Tela:
         self.desenha_mensagem(aventureiro.char, aventureiro.posicao, aventureiro.cor)
 
         atributos = f"{aventureiro.nome} nv. {aventureiro.nivel} ({aventureiro.xp}/{aventureiro.xp_por_nivel}): " \
-            f"vida {aventureiro.vida}; força {aventureiro.forca}; defesa {aventureiro.defesa}"
+            f"vida {aventureiro.vida}; força {aventureiro.forca}; defesa {aventureiro.defesa}; {aventureiro.movimentos} movimentos "
 
         fonte = pygame.font.SysFont(FONTE, GRID // 2)
         texto = fonte.render(atributos, True, CORES.branco)
 
+        x = (GRID * TAMANHO_MAPA + LARGURA_ADICIONAL - MARGEM - texto.get_width()) /2 
         y = GRID * TAMANHO_MAPA + ALTURA_ADICIONAL - MARGEM - texto.get_height()
-        self.display.blit(texto, [MARGEM, y])
+        self.display.blit(texto, [x, y])
 
     def tesouro(self, tesouro):
-        self.desenha_mensagem("X", tesouro.posicao)
+        self.desenha_mensagem("X", tesouro.posicao, CORES.vermelho)
+
+    def pocao(self, pocao):
+        if pocao.ativa == "1":
+            self.desenha_mensagem("%", pocao.posicao, CORES.azul)
+
+        
 
     def mapa(self, aventureiro, tesouro, obstaculos):
         for linha in range(TAMANHO_MAPA):
@@ -80,3 +89,11 @@ class Tela:
                     pos_preenchidas.append(obstaculo.posicao)
                 if [linha, coluna] not in pos_preenchidas:
                     self.desenha_mensagem(".", [linha, coluna])
+
+    def dificuldade(self, aventureiro):
+        fonte = pygame.font.SysFont(FONTE, GRID // 2)
+        dificuldade =  str(format(aventureiro.dificuldade, '.4f'))
+        texto = fonte.render(dificuldade, True, CORES.branco)
+        x = (GRID * TAMANHO_MAPA + LARGURA_ADICIONAL - MARGEM - texto.get_width())
+        y = 35
+        self.display.blit(texto, [x, y])

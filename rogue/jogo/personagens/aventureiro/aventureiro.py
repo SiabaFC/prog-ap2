@@ -16,11 +16,16 @@ class Aventureiro:
     def __init__(self, nome):
         self.nome = nome
 
-        self.vida = random.randint(100, 120)
-        self.forca = random.randint(10, 18)
-        self.defesa = random.randint(10, 18)
+        if nome == "SEGREDO":
+            self.vida = 200
+            self.forca = 30
+            self.defesa = 30
+        else:
+            self.vida = random.randint(100, 120)
+            self.forca = random.randint(10, 18)
+            self.defesa = random.randint(10, 18)
+        
         self.posicao = [0, 0]
-
         self.cor = CORES.branco
         self.char = "@"
         self.chars_possiveis = ["@", "#", "$", "&"]
@@ -30,6 +35,7 @@ class Aventureiro:
         self.xp = 0
         self.nivel = 1
         self.xp_por_nivel = 5
+        self.movimentos = 0
 
     def exportar(self):
         return {
@@ -45,7 +51,8 @@ class Aventureiro:
             "xp": self.xp,
             "nivel": self.nivel,
             "xp_por_nivel": self.xp_por_nivel,
-            "classe": self.__class__.__name__
+            "classe": self.__class__.__name__,
+            "movimentos": self.movimentos,
         }
 
     def importar(self, dados):
@@ -65,6 +72,7 @@ class Aventureiro:
         self.xp = dados["xp"]
         self.nivel = dados["nivel"]
         self.xp_por_nivel = dados["xp_por_nivel"]
+        self.movimentos = dados["movimentos"]
 
     def ganhar_xp(self, valor):
         self.xp += valor
@@ -111,6 +119,7 @@ class Aventureiro:
 
     def andar(self, nova_posicao):
         self.posicao = nova_posicao
+        self.movimentos += 1
 
     def atacar(self):
         """
